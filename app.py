@@ -1,135 +1,241 @@
-import streamlit as st
-
-# ১. প্রফেশনাল পেজ কনফিগ
-st.set_page_config(page_title="Elish Kini Pro", page_icon="🐟", layout="centered")
-
-# ২. ডার্ক মোড কিলার CSS (Force Visibility)
-st.markdown("""
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
-    
-    /* পুরো অ্যাপের ব্যাকগ্রাউন্ড - Midnight Blue */
-    .stApp {
-        background-color: #0F172A !important;
-        font-family: 'Hind Siliguri', sans-serif !important;
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hilsha Helper</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --navy: #001f3f;
+        --light: #f9f9f9;
+        --dark: #121212;
+        --primary-text-light: #ffffff;
+        --primary-text-dark: #000000;
+        --highlight: #ffcc00;
     }
 
-    /* ড্রপডাউন ও ইনপুট বক্স ফিক্স (সবচেয়ে জরুরি) */
-    div[data-baseweb="select"] > div, div[data-baseweb="input"] > div, input {
-        background-color: #E2E8F0 !important; /* হালকা গ্রে ব্যাকগ্রাউন্ড */
-        color: #000000 !important; /* কুচকুচে কালো লেখা */
-        border: 2px solid #6366F1 !important;
-        border-radius: 10px !important;
-    }
-    
-    /* ড্রপডাউন অপশন লিস্ট ফিক্স */
-    ul[role="listbox"] {
-        background-color: #FFFFFF !important;
-    }
-    ul[role="listbox"] li {
-        color: #000000 !important;
+    body {
+        margin: 0;
+        font-family: 'Roboto', sans-serif;
+        background-color: var(--light);
+        color: var(--primary-text-dark);
+        transition: background-color 0.3s, color 0.3s;
     }
 
-    /* সব সাধারণ টেক্সট এবং লেবেল - ঝকঝকে সাদা */
-    h1, h2, h3, p, span, label, b, li, .stMarkdown {
-        color: #FFFFFF !important;
+    body.dark-mode {
+        background-color: var(--dark);
+        color: var(--primary-text-light);
     }
 
-    /* ন্যাভিগেশন বক্স */
-    .nav-header {
-        background: #1E293B;
-        padding: 18px;
-        border-radius: 15px;
-        border: 1px solid #334155;
+    header {
+        background-color: var(--navy);
+        color: white;
+        padding: 15px 20px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 25px;
     }
 
-    /* মেনুবার গাইড */
-    .menu-pointer {
-        color: #A855F7;
-        font-weight: 700;
-        border: 1px dashed #A855F7;
-        padding: 5px 10px;
-        border-radius: 8px;
+    header h1 {
+        margin: 0;
+        font-size: 24px;
     }
 
-    /* স্ট্যাট কার্ড (Shikho Style) */
-    .stat-card {
-        background: #1E293B;
+    .toggle-mode {
+        cursor: pointer;
+        padding: 8px 12px;
+        border: none;
+        background-color: var(--highlight);
+        border-radius: 5px;
+        font-weight: bold;
+    }
+
+    nav {
+        background-color: #004080;
+        display: flex;
+        justify-content: space-around;
+        padding: 10px 0;
+    }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+        padding: 6px 12px;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+    }
+
+    nav a:hover {
+        background-color: #003366;
+    }
+
+    main {
         padding: 20px;
-        border-radius: 15px;
-        border: 1px solid #334155;
-        text-align: center;
-        margin-bottom: 15px;
+        max-width: 900px;
+        margin: auto;
     }
-    .neon-text { color: #A855F7 !important; font-size: 24px; font-weight: 700; }
-    </style>
-    """, unsafe_allow_html=True)
 
-# ৩. কাস্টম হেডার
-st.markdown("""
-    <div class="nav-header">
-        <div style="font-size:20px; font-weight:700; color:#6366F1;">ELISH KINI PRO 🐟</div>
-        <div class="menu-pointer">মেনু ← ☰</div>
-    </div>
-    """, unsafe_allow_html=True)
+    section {
+        margin-bottom: 40px;
+    }
 
-# ৪. সাইডবার (মেনুবার)
-with st.sidebar:
-    st.markdown("<h2 style='color:#A855F7 !important;'>Menu Dashboard</h2>", unsafe_allow_html=True)
-    menu = st.radio("বিভাগ বেছে নিন:", [
-        "📊 বাজার ও রপ্তানি রিপোর্ট", 
-        "⚖️ স্মার্ট প্রাইস ডিটেক্টর", 
-        "💡 ইলিশ কেনার গোপন টিপস",
-        "📞 অভিযোগ কেন্দ্র"
-    ])
-    st.markdown("---")
-    st.markdown("Senior Dev: **Sahib**")
+    section h2 {
+        color: var(--navy);
+        border-bottom: 2px solid var(--highlight);
+        padding-bottom: 5px;
+    }
 
-# ৫. কন্টেন্ট লজিক
-if menu == "📊 বাজার ও রপ্তানি রিপোর্ট":
-    st.markdown("### চাঁদপুরের ইলিশ বাণিজ্য ডেটা")
-    c1, c2 = st.columns(2)
-    with c1:
-        st.markdown('<div class="stat-card"><p>বার্ষিক রপ্তানি</p><div class="neon-text">৫২,০০০ টন+</div></div>', unsafe_allow_html=True)
-    with c2:
-        st.markdown('<div class="stat-card"><p>সরকারি লাভ (রাজস্ব)</p><div class="neon-text">১২৫ কোটি+</div></div>', unsafe_allow_html=True)
-    st.info("তথ্যসূত্র: মৎস্য অধিদপ্তর ও চাঁদপুর বন্দর কর্তৃপক্ষ (২০২৪-২৫)")
+    input, button, select {
+        padding: 10px;
+        margin: 5px 0;
+        width: 100%;
+        max-width: 400px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
 
-elif menu == "⚖️ স্মার্ট প্রাইস ডিটেক্টর":
-    st.markdown("### সঠিক দাম যাচাই করুন")
-    # ড্রপডাউন এখন একদম পরিষ্কার দেখা যাবে
-    size = st.selectbox("মাছের ওজন নির্বাচন করুন:", ["৫০০-৬০০ গ্রাম", "১ কেজি সাইজ", "১.৫ কেজি+", "২ কেজি+"])
-    prices = {"৫০০-৬০০ গ্রাম": 1150, "১ কেজি সাইজ": 1550, "১.৫ কেজি+": 1950, "২ কেজি+": 2750}
-    fair_price = prices[size]
-    
-    st.markdown(f"গড় বাজার দর: **{fair_price} ৳**")
-    user_p = st.number_input("বিক্রেতা কত চাচ্ছে?", value=int(fair_price))
-    
-    if st.button("রেজাল্ট দেখুন"):
-        if user_p > fair_price + 150:
-            st.error(f"🚨 অতিরিক্ত {user_p - fair_price} টাকা বেশি চাচ্ছে!")
-        else:
-            st.success("✅ দাম একদম সঠিক আছে।")
+    button {
+        background-color: var(--navy);
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
 
-elif menu == "💡 ইলিশ কেনার গোপন টিপস":
-    st.markdown("### সেরা ইলিশ চেনার ৪টি উপায়")
-    st.markdown("""
-    1. **ফুলকা:** উজ্জ্বল লাল হতে হবে (ধূসর মানেই পুরনো)।
-    2. **পেট:** হাত দিয়ে চাপ দিলে যদি শক্ত লাগে তবেই কিনুন।
-    3. **চোখ:** স্বচ্ছ ও মণির মতো চকচকে হতে হবে।
-    4. **আঁশ:** গায়ের রূপালী আভা একদম আয়নার মতো চকচকে হবে।
-    """)
+    button:hover {
+        background-color: #003366;
+    }
 
-elif menu == "📞 অভিযোগ কেন্দ্র":
-    st.markdown('<div class="stat-card">', unsafe_allow_html=True)
-    st.markdown("## ভোক্তা অধিকার চাঁদপুর")
-    st.write("প্রতারিত হলে সরাসরি কল করুন:")
-    st.markdown("<h1 style='color:#F59E0B !important; font-size:60px; margin:10px 0;'>16121</h1>", unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+    .hilsha-result {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #e6f0ff;
+        border-left: 5px solid var(--navy);
+        border-radius: 5px;
+    }
 
-# ৬. ফুটার
-st.markdown("<center><p style='color:#64748B; font-size:12px; margin-top:40px;'>© 2026 | Senior Dev: Sahib</p></center>", unsafe_allow_html=True)
+    .dark-mode .hilsha-result {
+        background-color: #001f33;
+    }
+
+    ul {
+        padding-left: 20px;
+    }
+
+    footer {
+        text-align: center;
+        padding: 15px;
+        background-color: #001f3f;
+        color: white;
+        margin-top: 40px;
+    }
+
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Hilsha Helper</h1>
+    <button class="toggle-mode">Dark Mode</button>
+</header>
+
+<nav>
+    <a href="#tips">মাছ কেনার টিপস</a>
+    <a href="#location">ঘাট লোকেশন</a>
+    <a href="#benefits">ইলিশ খাওয়ার উপকারিতা</a>
+    <a href="#complaint">অভিযোগ</a>
+</nav>
+
+<main>
+    <!-- Hilsha Dam Checker -->
+    <section id="tips">
+        <h2>মাছ কেনার টিপস</h2>
+        <p>ইলিশ কিনতে গেলে এই বিষয়গুলো লক্ষ্য করুন:</p>
+        <ul>
+            <li>ডিমধারী ইলিশ কিনুন সুস্থ ও তাজা হওয়া উচিত।</li>
+            <li>চোখ পরিষ্কার এবং উজ্জ্বল হওয়া দরকার।</li>
+            <li>দাম যাচাই করতে বিক্রেতার সাথে তুলনা করুন।</li>
+        </ul>
+        <label for="price">দাম যাচাই করুন (প্রতি কেজি):</label>
+        <input type="number" id="price" placeholder="দাম লিখুন">
+        <button onclick="checkPrice()">দাম যাচাই</button>
+        <div class="hilsha-result" id="price-result"></div>
+    </section>
+
+    <!-- Ghats -->
+    <section id="location">
+        <h2>ঘাটের লোকেশন</h2>
+        <p>বিভিন্ন জেলার ইলিশ ঘাটের নাম এবং লোকেশন:</p>
+        <ul>
+            <li>মুন্সিগঞ্জ ঘাট: Google Map লিংক</li>
+            <li>বরিশাল ঘাট: Google Map লিংক</li>
+            <li>কক্সবাজার ঘাট: Google Map লিংক</li>
+        </ul>
+    </section>
+
+    <!-- Benefits -->
+    <section id="benefits">
+        <h2>ইলিশ খাওয়ার উপকারিতা</h2>
+        <ul>
+            <li>মস্তিষ্কের বিকাশে সহায়ক।</li>
+            <li>হৃদরোগের ঝুঁকি কমায়।</li>
+            <li>প্রোটিন ও ওমেগা-৩ ফ্যাটি অ্যাসিডে সমৃদ্ধ।</li>
+        </ul>
+    </section>
+
+    <!-- Complaint -->
+    <section id="complaint">
+        <h2>অভিযোগ</h2>
+        <p>কোনও অসুবিধা বা অভিযোগ থাকলে নিচে লিখুন:</p>
+        <textarea id="complaint-text" rows="4" placeholder="আপনার অভিযোগ লিখুন"></textarea>
+        <button onclick="submitComplaint()">জমা দিন</button>
+    </section>
+</main>
+
+<footer>
+    &copy; 2026 Hilsha Helper | All Rights Reserved
+</footer>
+
+<script>
+    // Dark/Light mode toggle
+    const toggleBtn = document.querySelector('.toggle-mode');
+    toggleBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        toggleBtn.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+    });
+
+    // Price checker (example logic)
+    function checkPrice() {
+        const price = document.getElementById('price').value;
+        const resultDiv = document.getElementById('price-result');
+        if (!price) {
+            resultDiv.textContent = 'দয়া করে একটি দাম লিখুন।';
+            return;
+        }
+        const marketPrice = 1200; // Example: standard market price
+        if (price < marketPrice) {
+            resultDiv.textContent = 'দাম কম, ভাল।';
+        } else if (price === marketPrice) {
+            resultDiv.textContent = 'দাম ঠিক আছে।';
+        } else {
+            resultDiv.textContent = 'দাম বেশি, সাবধান।';
+        }
+    }
+
+    // Complaint submission (example)
+    function submitComplaint() {
+        const text = document.getElementById('complaint-text').value;
+        if (!text) {
+            alert('অভিযোগ লিখুন।');
+            return;
+        }
+        alert('আপনার অভিযোগ জমা হয়েছে। ধন্যবাদ।');
+        document.getElementById('complaint-text').value = '';
+    }
+</script>
+
+</body>
+</html>
