@@ -1,145 +1,134 @@
-  import streamlit as st
-import datetime
+      import streamlit as st
 
-# ১. DSAT School এর মতো ক্লিন সেটআপ
+# ১. পেজ সেটআপ
 st.set_page_config(page_title="ইলিশ কিনি", page_icon="🐟", layout="wide")
 
-# ২. আল্ট্রা-প্রিমিয়াম হোয়াইট ও অরেঞ্জ থিম (CSS)
+# ২. DSAT School স্টাইল CSS (Purple, White, Orange)
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;800&family=Hind+Siliguri:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;700;900&family=Hind+Siliguri:wght@400;700&display=swap');
     
+    /* পুরো বডি সাদা */
     html, body, [class*="css"] {
         font-family: 'Public Sans', 'Hind Siliguri', sans-serif;
-        background-color: #FFFFFF;
-        color: #2D3748;
+        background-color: #FFFFFF !important;
+    }
+
+    /* টপ বার (DSAT School এর মতো) */
+    .header-container {
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 10px 5%; background: white; border-bottom: 1px solid #f0f0f0;
+    }
+    .brand-logo {
+        font-size: 26px; font-weight: 900; color: #6B46C1; /* Purple */
+    }
+
+    /* কমলা টেক্সট (১ম পিকের মতো) */
+    .orange-text {
+        color: #FF7A00 !important; font-weight: 800;
+    }
+
+    /* বেগুনি বাটন (Enroll বাটনের মতো) */
+    div.stButton > button:first-child {
+        background-color: #6B46C1; color: white !important;
+        border-radius: 50px; padding: 10px 30px; font-weight: 700;
+        border: none; width: 100%; transition: 0.3s;
     }
     
-    /* ব্যাকগ্রাউন্ড সাদা করা */
-    .stApp { background-color: #FFFFFF; }
-
-    /* টপ বার ও লোগো (DSAT School Style) */
-    .top-nav {
-        display: flex; justify-content: space-between; align-items: center;
-        padding: 15px 5%; border-bottom: 1px solid #EDF2F7;
-        background: #FFFFFF; position: sticky; top: 0; z-index: 99;
-    }
-    .brand-name {
-        font-size: 28px; font-weight: 800; color: #1A202C;
-    }
-    .brand-name span { color: #FF7A00; }
-
-    /* মেইন কার্ড ডিজাইন */
-    .content-card {
-        background: #FFFFFF; padding: 30px; border-radius: 20px;
-        border: 1px solid #F1F5F9; box-shadow: 0 10px 30px rgba(0,0,0,0.02);
-        margin-top: 20px;
+    /* কমলা বাটন (Book a Session এর মতো) */
+    .stDownloadButton button {
+        background-color: #FF7A00 !important; color: white !important;
+        border-radius: 50px; width: 100%; border: none;
     }
 
-    /* বাটন ডিজাইন (DSAT এর অরেঞ্জ বাটন) */
-    div.stButton > button:first-child {
-        background: #FF7A00; color: white !important;
-        border-radius: 10px; height: 3.8em; width: 100%;
-        font-weight: 700; border: none; font-size: 16px;
-        transition: 0.3s ease;
+    /* ইনফো কার্ড (DSAT স্টাইল) */
+    .info-card {
+        border: 2px solid #6B46C1; border-radius: 20px;
+        padding: 20px; margin-bottom: 20px; background: white;
     }
-    div.stButton > button:first-child:hover {
-        background: #E66E00; box-shadow: 0 5px 15px rgba(255,122,0,0.3);
-    }
-
-    /* সাইডবার (ডান পাশের মেনু ইফেক্ট) */
+    
+    /* সাইডবার মেনু */
     [data-testid="stSidebar"] {
-        background-color: #FFFFFF; border-left: 1px solid #EDF2F7;
+        background-color: #FFFFFF; border-right: 1px solid #eee;
     }
     </style>
     """, unsafe_allow_html=True)
 
-# ৩. মেইন হেডার (DSAT এর মতো লোগো ও মেনু আইকন)
-st.markdown(f"""
-    <div class="top-nav">
-        <div class="brand-name">ইলি<span>শ কিনি</span></div>
-        <div style="font-size: 24px; color: #4A5568;">☰</div>
+# ৩. টপ হেডার (ব্র্যান্ডিং ও ৩ ড্যাশ মেনু)
+st.markdown("""
+    <div class="header-container">
+        <div class="brand-logo">ইলিশ কিনি</div>
+        <div style="font-size: 24px; color: #6B46C1;">☰</div>
     </div>
     """, unsafe_allow_html=True)
 
-# ৪. ডাইনামিক প্রাইসিং লজিক (অটো আপডেট)
-month = datetime.datetime.now().month
-is_off_season = month in [2, 3, 4, 5, 6]
-season_multiplier = 1.35 if is_off_season else 1.0
-
-# ৫. সাইডবার মেনুবার (১ম পিকের মতো বাম পাশে ৩ ড্যাশ কন্ট্রোল)
+# ৪. সাইডবার মেনুবার (আইকন + পরিষ্কার টেক্সট)
 with st.sidebar:
-    st.markdown("### 📑 মেনুবার")
-    menu = st.radio("অপশন বেছে নিন", ["🏠 হোম", "📍 ঘাট ম্যাপ", "📜 ইতিহাস ও রপ্তানি", "🩺 উপকারিতা", "📞 অভিযোগ"])
+    st.markdown("<h2 style='color:#6B46C1;'>মেনুবার</h2>", unsafe_allow_html=True)
+    choice = st.radio("ক্যাটাগরি বেছে নিন:", [
+        "🏠 হোম - বাজার দর", 
+        "📍 মাছ ঘাট লোকেশন", 
+        "📜 ইলিশের ইতিহাস", 
+        "🩺 স্বাস্থ্য গুণাগুণ", 
+        "📞 অভিযোগ কেন্দ্র"
+    ])
     st.markdown("---")
-    lang = st.segmented_control("Language", ["বাংলা", "English"], default="বাংলা")
+    st.write("ডেভেলপার: **সাহিব**")
 
-# ৬. ড্যাশবোর্ড কন্টেন্ট
-if menu == "🏠 হোম":
-    st.markdown('<div class="content-card">', unsafe_allow_html=True)
-    st.markdown("## 💰 আজকের বাজার দর চেক")
+# ৫. মেইন কন্টেন্ট
+st.markdown("<br>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align:center; color:#6B46C1;'>স্বাগতম আপনাকে</h1>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align:center;' class='orange-text'>সঠিক ইলিশ কিনুন সঠিক দামে</h2>", unsafe_allow_html=True)
+
+if "🏠 হোম" in choice:
+    st.markdown('<div class="info-card">', unsafe_allow_html=True)
+    st.markdown("<h3 class='orange-text'>আজকের বাজার দর যাচাই</h3>", unsafe_allow_html=True)
     
-    fish_size = st.selectbox("মাছের সাইজ নির্বাচন করুন", ["৫০০-৬০০ গ্রাম", "৭০০-৯০০ গ্রাম", "১ কেজি সাইজ", "১.১ - ১.৫ কেজি", "২ কেজি বা বেশি"])
+    size = st.selectbox("মাছের সাইজ নির্বাচন করুন", ["৫০০-৬০০ গ্রাম", "৭০০-৯০০ গ্রাম", "১ কেজি সাইজ", "১.৫ কেজি+", "২ কেজি+"])
     
-    # প্রাইস ডাটাবেজ
-    prices = {"৫০০-৬০০ গ্রাম": 1150, "৭০০-৯০০ গ্রাম": 1200, "১ কেজি সাইজ": 1450, "১.১ - ১.৫ কেজি": 1600, "২ কেজি বা বেশি": 1850}
-    fair_price = int(prices[fish_size] * season_multiplier)
+    # প্রাইস ডাটা
+    prices = {"৫০০-৬০০ গ্রাম": 1150, "৭০০-৯০০ গ্রাম": 1250, "১ কেজি সাইজ": 1500, "১.৫ কেজি+": 1900, "২ কেজি+": 2700}
+    target = prices[size]
     
-    st.metric("সঠিক বাজার মূল্য (কেজি)", f"{fair_price} ৳", delta="অফ-সিজন" if is_off_season else "ভরা মৌসুম")
+    st.markdown(f"<p style='color:#6B46C1; font-size:18px;'>সঠিক মূল্য: <b>{target} ৳ (প্রতি কেজি)</b></p>", unsafe_allow_html=True)
+    user_p = st.number_input("বিক্রেতা কত দাম চাচ্ছে?", value=target)
     
-    user_price = st.number_input("বিক্রেতা কত দাম চাচ্ছে?", min_value=100, value=fair_price)
-    
-    if st.button("চেক করুন"):
-        diff = user_price - fair_price
-        if diff > 150:
-            st.error(f"🚨 সাবধান! আপনি প্রতি কেজিতে {diff} টাকা বেশি দিচ্ছেন। দরদাম করুন।")
+    if st.button("দাম যাচাই করুন"):
+        if user_p > target + 150:
+            st.error(f"🚨 সাবধান! আপনি অতিরিক্ত {user_p - target} টাকা দিচ্ছেন।")
         else:
-            st.success("✅ এটি একদম সঠিক দাম। আপনি নিশ্চিন্তে কিনতে পারেন।")
+            st.success("✅ দাম একদম ঠিক আছে।")
             st.balloons()
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ৭. ঘাট ম্যাপ (১০০% কাজ করবে এমন লিঙ্ক)
-elif menu == "📍 ঘাট ম্যাপ":
-    st.markdown('<div class="content-card">', unsafe_allow_html=True)
-    st.subheader("📍 চাঁদপুর বড় স্টেশন মাছ ঘাট")
-    st.write("সরাসরি মাছ ঘাট যাওয়ার জন্য নিচের বাটনে ক্লিক করুন:")
-    # চাঁদপুর বড় স্টেশন মাছ ঘাটের ডিরেক্ট গুগল ম্যাপস লিঙ্ক
-    map_url = "https://www.google.com/maps/dir//Chandpur+Fishery+Ghat,+Chandpur/"
+elif "📍 মাছ ঘাট" in choice:
+    st.markdown('<div class="info-card">', unsafe_allow_html=True)
+    st.markdown("<h3 class='orange-text'>চাঁদপুর বড় স্টেশন মাছ ঘাট</h3>", unsafe_allow_html=True)
+    st.write("সেরা ইলিশের জন্য সরাসরি চলে যান চাঁদপুরের মোহনায়।")
+    # সলিড গুগল ম্যাপস লিঙ্ক
+    map_link = "https://www.google.com/maps/search/Chandpur+Fish+Ghat"
     st.markdown(f"""
-        <a href="{map_url}" target="_blank" style="text-decoration:none;">
-            <div style="background:#4285F4; color:white; text-align:center; padding:15px; border-radius:10px; font-weight:bold;">
-                Google Maps এ লোকেশন দেখুন
+        <a href="{map_link}" target="_blank" style="text-decoration:none;">
+            <div style="background:#FF7A00; color:white; text-align:center; padding:15px; border-radius:50px; font-weight:bold;">
+                গুগল ম্যাপে লোকেশন দেখুন
             </div>
         </a>
     """, unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ৮. ইতিহাস ও অর্থনীতি (বাংলা/ইংরেজি অনুবাদ)
-elif menu == "📜 ইতিহাস ও রপ্তানি":
-    st.markdown('<div class="content-card">', unsafe_allow_html=True)
-    if lang == "বাংলা":
-        st.subheader("চাঁদপুরের ইলিশের ইতিহাস")
-        st.write("চাঁদপুর হলো ইলিশের রাজধানী। পদ্মা-মেঘনা-ডাকাতিয়ার মিলনস্থলের ইলিশের স্বাদই আলাদা। প্রতি বছর বাংলাদেশ কয়েক হাজার কোটি টাকার ইলিশ রপ্তানি করে, যার বড় যোগান আসে চাঁদপুর থেকে।")
-    else:
-        st.subheader("Economy of Chandpur Hilsha")
-        st.write("Chandpur is known as the 'Home of Hilsha'. Due to the unique water properties of the Padma-Meghna estuary, these fish are the tastiest. Bangladesh earns massive foreign currency through Hilsha exports.")
+elif "📜 ইতিহাস" in choice:
+    st.markdown('<div class="info-card">', unsafe_allow_html=True)
+    st.markdown("<h3 class='orange-text'>ইলিশের গৌরবগাথা</h3>", unsafe_allow_html=True)
+    st.write("চাঁদপুর হলো ইলিশের রাজধানী। এখানকার পদ্মা-মেঘনা মোহনার মাছ পৃথিবীর সেরা।")
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ৯. উপকারিতা
-elif menu == "🩺 উপকারিতা":
-    st.markdown('<div class="content-card">', unsafe_allow_html=True)
-    st.subheader("🐟 কেন ইলিশ খাবেন?")
-    st.write("• হার্ট সুস্থ রাখে (Omega-3 fatty acids)।\n• ব্রেইন ডেভেলপমেন্টে সাহায্য করে।\n• প্রচুর আয়োডিন ও সেলেনিয়াম সমৃদ্ধ।")
+elif "📞 অভিযোগ" in choice:
+    st.markdown('<div style="background:#FFF5F5; padding:40px; border-radius:20px; text-align:center; border:2px solid #6B46C1;">', unsafe_allow_html=True)
+    st.markdown("<h2 class='orange-text'>ভোক্তা অধিকার চাঁদপুর</h2>", unsafe_allow_html=True)
+    st.write("অতিরিক্ত দাম চাইলে কল করুন")
+    st.markdown('<a href="tel:16121" style="text-decoration:none;"><h1 style="color:#6B46C1; font-size:60px;">📞 16121</h1></a>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ১০. অভিযোগ (Call Function)
-elif menu == "📞 অভিযোগ":
-    st.markdown('<div style="background:#FFF5F5; padding:40px; border-radius:20px; text-align:center; border:1px solid #FEB2B2; margin-top:20px;">', unsafe_allow_html=True)
-    st.markdown('<h2 style="color:#C53030;">ভোক্তা অধিকার চাঁদপুর</h2>', unsafe_allow_html=True)
-    st.write("অতিরিক্ত দাম চাইলে সরাসরি কল করুন")
-    st.markdown('<a href="tel:16121" style="text-decoration:none;"><h1 style="color:#C53030; font-size:60px;">📞 16121</h1></a>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# ১১. ফুটার (Sahib Branding)
-st.markdown("---")
-st.markdown("<center><p style='color:#A0AEC0; font-size:14px;'>Developed by <b>Sahib</b><br>© 2026 Elish Kini Project</p></center>", unsafe_allow_html=True)  
+# ৬. ফুটার
+st.markdown("<br><hr>", unsafe_allow_html=True)
+st.markdown("<center><p style='color:#6B46C1;'>Developed by <b>Sahib</b> | © 2026 Elish Kini</p></center>", unsafe_allow_html=True)
