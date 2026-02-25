@@ -1,156 +1,136 @@
 import streamlit as st
 
-# 1. Google Standard Page Config
+# ১. পেজ কনফিগ (Sahib's Official)
 st.set_page_config(page_title="Elish Kini Pro", page_icon="🐟", layout="centered")
 
-# 2. Ultra-Premium Dark Theme (Shikho/3rd Pic Style)
+# ২. আলটিমেট ফিক্স CSS (Force Visibility for Inputs & Text)
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
     
-    /* Main Background - Midnight Dark Blue */
+    /* ব্যাকগ্রাউন্ড - Midnight Blue */
     .stApp {
         background-color: #0F172A !important;
         font-family: 'Hind Siliguri', sans-serif !important;
     }
 
-    /* Sidebar Dark Look */
-    [data-testid="stSidebar"] {
-        background-color: #1E293B !important;
-        border-right: 1px solid #334155;
+    /* ড্রপডাউন এবং ইনপুট ফিক্স - এটা এখন কুচকুচে কালো হবে যাতে সাদা ফন্টও দেখা যায় */
+    div[data-baseweb="select"] > div, div[data-baseweb="input"] > div, input {
+        background-color: #FFFFFF !important; /* সাদা ব্যাকগ্রাউন্ড যাতে টেক্সট কালো থাকে */
+        color: #000000 !important;
+        border-radius: 8px !important;
+    }
+    
+    /* ড্রপডাউন লিস্টের ভেতরে লেখা কালো করা */
+    ul[role="listbox"] li {
+        color: #000000 !important;
+        background-color: #FFFFFF !important;
     }
 
-    /* 3rd Pic-er moto Shada Font */
+    /* সব সাধারণ টেক্সট ঝকঝকে সাদা */
     h1, h2, h3, p, span, label, b, li {
         color: #FFFFFF !important;
     }
 
-    /* Custom Top Header with 3-Dash Menu Icon */
-    .custom-nav {
+    /* টপ ন্যাভ বার */
+    .nav-box {
         background: #1E293B;
-        padding: 15px 20px;
-        border-radius: 15px;
+        padding: 15px;
+        border-radius: 12px;
         border: 1px solid #334155;
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 25px;
     }
-    .brand { font-size: 22px; font-weight: 700; color: #A855F7 !important; }
-    .hamburger { font-size: 24px; color: #FFFFFF !important; cursor: pointer; }
 
-    /* Shikho Style Data Cards */
-    .shikho-card {
+    /* মেনু সাইডবার হিন্ট আইকন */
+    .menu-hint {
+        color: #A855F7;
+        font-weight: bold;
+        animation: blink 2s infinite;
+    }
+    @keyframes blink { 0% {opacity: 1;} 50% {opacity: 0.3;} 100% {opacity: 1;} }
+
+    /* ডাটা কার্ড ডিজাইন */
+    .stat-card {
         background: #1E293B;
-        padding: 22px;
-        border-radius: 18px;
+        padding: 20px;
+        border-radius: 15px;
         border: 1px solid #334155;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        text-align: center;
     }
-
-    /* Neon Highlights */
-    .neon-purple { color: #A855F7 !important; font-weight: 700; }
-    .neon-blue { color: #38BDF8 !important; font-weight: 700; }
-    .neon-orange { color: #F59E0B !important; font-weight: 700; }
-
-    /* Button Style */
-    div.stButton > button {
-        background: linear-gradient(135deg, #6366F1 0%, #A855F7 100%) !important;
-        color: white !important;
-        border-radius: 12px;
-        height: 3.5em; width: 100%; border: none; font-weight: 700;
-        font-size: 16px;
-    }
-
-    /* Input Box Dark Mode Protection */
-    div[data-baseweb="select"] > div, input {
-        background-color: #0F172A !important;
-        color: white !important;
-        border: 1px solid #334155 !important;
-    }
-
-    /* Sidebar text fix */
-    .css-17l2qt2 { color: white !important; }
+    
+    .neon-purple { color: #A855F7 !important; }
+    .neon-orange { color: #F59E0B !important; }
     </style>
     """, unsafe_allow_html=True)
 
-# 3. Functional Header with 3-Dash Hint
+# ৩. ন্যাভিগেশন বার
 st.markdown("""
-    <div class="custom-nav">
-        <div class="brand">Shikho Elish 🐟</div>
-        <div class="hamburger">☰</div>
+    <div class="nav-box">
+        <div style="font-size:22px; font-weight:700; color:#A855F7;">Elish Kini Pro 🐟</div>
+        <div class="menu-hint">← মেনু এখানে ☰</div>
     </div>
     """, unsafe_allow_html=True)
 
-# 4. Sidebar Menu
+# ৪. সাইডবার (মেনুবার)
 with st.sidebar:
-    st.markdown("<h2 class='neon-purple'>Main Menu</h2>", unsafe_allow_html=True)
-    menu = st.radio("Choose Section:", [
-        "📊 Bazar Report", 
-        "⚖️ Price Checker", 
-        "💡 Secret Buying Tips",
-        "📞 Complain Box"
+    st.markdown("<h2 class='neon-purple'>Dashboard</h2>", unsafe_allow_html=True)
+    menu = st.radio("বিভাগ নির্বাচন করুন:", [
+        "📊 চাঁদপুর ইলিশ রিপোর্ট", 
+        "⚖️ স্মার্ট প্রাইস ডিটেক্টর", 
+        "💡 মাছ কেনার গোপন টিপস",
+        "📞 কমপ্লেন সেন্টার"
     ])
     st.markdown("---")
     st.write("Senior Dev: **Sahib**")
 
-# 5. Content Section
-if menu == "📊 Bazar Report":
-    st.markdown("<h2 class='neon-blue'>Chandpur Elish Report 2026</h2>", unsafe_allow_html=True)
+# ৫. কন্টেন্ট এরিয়া
+if menu == "📊 চাঁদপুর ইলিশ রিপোর্ট":
+    st.markdown("### চাঁদপুরের ইলিশ বাণিজ্য ২০২৪-২৫")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown('<div class="stat-card"><p>বার্ষিক রপ্তানি</p><h2 class="neon-orange">৫২,০০০ টন+</h2></div>', unsafe_allow_html=True)
+    with col2:
+        st.markdown('<div class="stat-card"><p>সরকারি লাভ (রাজস্ব)</p><h2 class="neon-purple">১২৫ কোটি+</h2></div>', unsafe_allow_html=True)
     
-    c1, c2 = st.columns(2)
-    with c1:
-        st.markdown("""<div class="shikho-card">
-            <p style="color:#94A3B8 !important; margin:0;">Export (Annual)</p>
-            <h2 class="neon-orange" style="margin:5px 0;">52,000+ Ton</h2>
-            <p style="font-size:12px; color:#94A3B8 !important;">India & Europe</p>
-        </div>""", unsafe_allow_html=True)
-    with c2:
-        st.markdown("""<div class="shikho-card">
-            <p style="color:#94A3B8 !important; margin:0;">Govt Revenue</p>
-            <h2 class="neon-purple" style="margin:5px 0;">125cr+ BDT</h2>
-            <p style="font-size:12px; color:#94A3B8 !important;">From Chandpur Zone</p>
-        </div>""", unsafe_allow_html=True)
-    
-    st.markdown("<div class='shikho-card'>", unsafe_allow_html=True)
-    st.markdown("<h3 class='neon-blue'>Business Summary</h3>", unsafe_allow_html=True)
-    st.write("Chandpur ghat theke protidin pray 800-1200 mon elish nationwide supply hoy. Peak season-e ekhane dainik 10-15 koti takar transaction hoy.")
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.info("চাঁদপুর মোহনা থেকে প্রতিদিন গড়ে ১০-১৫ কোটি টাকার ইলিশ দেশের বিভিন্ন প্রান্তে সরবরাহ হয়।")
 
-elif menu == "⚖️ Price Checker":
-    st.markdown("<div class='shikho-card'>", unsafe_allow_html=True)
-    st.markdown("<h2 class='neon-purple'>Smart Price Detector</h2>", unsafe_allow_html=True)
+elif menu == "⚖️ স্মার্ট প্রাইস ডিটেক্টর":
+    st.markdown("### সঠিক দাম যাচাই করুন")
     
-    size = st.selectbox("Select Size:", ["500-600g", "1KG Size", "1.5KG+", "2KG+"])
-    prices = {"500-600g": 1150, "1KG Size": 1550, "1.5KG+": 1950, "2KG+": 2750}
+    # ড্রপডাউন এখন একদম পরিষ্কার দেখা যাবে
+    size = st.selectbox("মাছের সাইজ নির্বাচন করুন:", ["৫০০-৬০০ গ্রাম", "১ কেজি সাইজ", "১.৫ কেজি+", "২ কেজি+"])
+    prices = {"৫০০-৬০০ গ্রাম": 1150, "১ কেজি সাইজ": 1550, "১.৫ কেজি+": 1950, "২ কেজি+": 2750}
     fair_price = prices[size]
     
-    st.write(f"Official Avg Price: **{fair_price} ৳**")
-    user_p = st.number_input("Seller Asking Price:", value=int(fair_price))
+    st.write(f"আজকের গড় দাম: **{fair_price} ৳**")
+    user_p = st.number_input("বিক্রেতা কত দাম চাচ্ছে?", value=int(fair_price))
     
-    if st.button("Check Result"):
+    if st.button("রেজাল্ট চেক করুন"):
         if user_p > fair_price + 150:
-            st.error(f"🚨 Too High! Extra {user_p - fair_price} BDT asked.")
+            st.error(f"🚨 অতিরিক্ত {user_p - fair_price} টাকা বেশি চাচ্ছে!")
         else:
-            st.success("✅ Price is fair. You can buy!")
+            st.success("✅ দাম সঠিক আছে।")
+
+elif menu == "💡 মাছ কেনার গোপন টিপস":
+    st.markdown("### রিসার্চ ভিত্তিক সেরা ইলিশ চেনার উপায়")
+    st.markdown("""
+    - **ফুলকা:** টকটকে লাল ফুলকা মানে মাছটি একদম টাটকা।
+    - **চোখ:** উজ্জ্বল ও স্বচ্ছ চোখ দেখে কিনুন। ঘোলাটে চোখ মানে পুরনো মাছ।
+    - **পেট পরীক্ষা:** পেটে হালকা চাপ দিয়ে দেখুন, যদি শক্ত থাকে তবে মাছটি ভালো।
+    - **গড়ন:** চাঁদপুরের মোহনার ইলিশ কিছুটা গোলগাল ও রূপালী হয়।
+    """)
+
+elif menu == "📞 কমপ্লেন সেন্টার":
+    st.markdown("<div class='stat-card'>", unsafe_allow_html=True)
+    st.markdown("## ভোক্তা অধিকার চাঁদপুর")
+    st.write("অসাধু ব্যবসায়ীর বিরুদ্ধে সরাসরি কল করুন:")
+    st.markdown("<h1 style='color:#F59E0B !important; font-size:60px;'>16121</h1>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
-elif menu == "💡 Secret Buying Tips":
-    st.markdown("<h2 class='neon-orange'>How to Identify Fresh Elish</h2>", unsafe_allow_html=True)
-    st.markdown("""<div class='shikho-card'>
-        <p><b>1. Belly Test:</b> Pet-e chap dile jodi mukh diye dim ber hoy, bujhben mach norom. Shokto pet-er mach kinun.</p>
-        <p><b>2. Silver Glow:</b> Fresh elish aynar moto chokchok korbe. Chokh jodi lal hoye thake, oita niben na.</p>
-        <p><b>3. Mohonar Garon:</b> Chandpur-er mohonar mach ektu gol-gal (potka) hoy ar lej-er dikta shoru hoy.</p>
-        <p><b>4. Gills (Fulkha):</b> Fulkha jodi tok-toke lal hoy tobe oita fresh. Kalche fulkha mane purono mach.</p>
-    </div>""", unsafe_allow_html=True)
-
-elif menu == "📞 Complain Box":
-    st.markdown("<div class='shikho-card' style='text-align:center;'>", unsafe_allow_html=True)
-    st.markdown("<h2 class='neon-purple'>Consumer Rights Hotline</h2>", unsafe_allow_html=True)
-    st.write("Jodi kono seller dhoka dey, call korun:")
-    st.markdown("<h1 style='color:#F59E0B !important; font-size:60px; margin:10px 0;'>16121</h1>", unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
-
-# 6. Footer
-st.markdown("<center><p style='color:#64748B; font-size:12px; margin-top:50px;'>© 2026 Elish Pro | Senior Dev: Sahib</p></center>", unsafe_allow_html=True)        
+# ৬. ফুটার
+st.markdown("<center><p style='color:#64748B; font-size:12px; margin-top:50px;'>© 2026 Elish Kini Pro | Developed by Sahib</p></center>", unsafe_allow_html=True)    
+    
