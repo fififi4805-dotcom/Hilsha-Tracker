@@ -1,110 +1,119 @@
 import streamlit as st
 
-# ১. পেজ সেটআপ ও Shikho স্টাইল ফন্ট (Hind Siliguri)
-st.set_page_config(page_title="ইলিশ কিনি", page_icon="🐟", layout="centered")
+# 1. Page Config (URL same thakbe)
+st.set_page_config(page_title="Elish Kini", page_icon="🐟", layout="centered")
 
-# ২. আলটিমেট ডিজাইন (DSAT Grey + White Card + Shikho Font)
+# 2. Premium CSS (Fixing Visibility & DSAT Style)
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@500;600;700&display=swap');
     
-    /* মূল ব্যাকগ্রাউন্ড - DSAT এর মতো প্রিমিয়াম গ্রে */
+    /* Background & Text Color Fix (Dark Mode Protection) */
     .stApp {
-        background-color: #F3F4F6 !important;
-        font-family: 'Hind Siliguri', sans-serif;
+        background-color: #F0F2F5 !important; /* DSAT Greyish White */
+    }
+    
+    /* Force all text to be visible */
+    h1, h2, h3, p, span, label, div {
+        font-family: 'Hind Siliguri', sans-serif !important;
+        color: #1A202C !important; /* Pure Blackish Grey for visibility */
     }
 
-    /* টপ ন্যাভ বার */
-    .top-nav {
-        background: #6B46C1; padding: 15px 25px; border-radius: 0 0 25px 25px;
-        display: flex; justify-content: space-between; align-items: center;
-        color: white; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(107, 70, 193, 0.2);
+    /* Top Bar Shikho Style */
+    .top-header {
+        background-color: #6B46C1;
+        padding: 20px;
+        border-radius: 0 0 20px 20px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
-    .brand { font-size: 26px; font-weight: 700; }
+    .top-header h1 { color: white !important; margin: 0; font-size: 28px; }
 
-    /* প্রিমিয়াম কার্ড (DSAT Style) */
+    /* Premium Card DSAT Style */
     .dsat-card {
-        background: #FFFFFF; padding: 30px; border-radius: 25px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        border: 1px solid #E5E7EB; margin-bottom: 25px;
+        background-color: #FFFFFF !important;
+        padding: 25px;
+        border-radius: 20px;
+        border: 1px solid #E2E8F0;
+        margin-top: 20px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     }
 
-    /* টেক্সট কালার গাইড */
-    .purple-text { color: #6B46C1; font-weight: 700; }
-    .orange-text { color: #FF7A00 !important; font-weight: 700; }
-    .content-para { color: #4A5568; line-height: 1.8; font-size: 17px; text-align: justify; }
+    /* Orange Highlight */
+    .highlight { color: #FF7A00 !important; font-weight: 700; }
 
-    /* বাটন ও ইনপুট (Shikho Style) */
+    /* Button Style */
     div.stButton > button {
-        background: linear-gradient(90deg, #FF7A00, #FF9500) !important;
-        color: white !important; border-radius: 15px; height: 3.5em; width: 100%;
-        border: none; font-weight: 700; font-size: 18px; transition: 0.3s;
+        background: linear-gradient(90deg, #6B46C1, #805AD5) !important;
+        color: white !important;
+        border-radius: 12px;
+        height: 3.5em;
+        width: 100%;
+        border: none;
+        font-weight: 700;
+        font-size: 18px;
     }
-    div.stButton > button:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 122, 0, 0.3); }
 
-    /* সাইডবার */
-    [data-testid="stSidebar"] { background-color: #FFFFFF; border-right: 3px solid #6B46C1; }
+    /* Sidebar (Menu Bar on Left) */
+    [data-testid="stSidebar"] {
+        background-color: #FFFFFF !important;
+        border-right: 3px solid #6B46C1;
+    }
     </style>
     """, unsafe_allow_html=True)
 
-# ৩. টপ বার
-st.markdown('<div class="top-nav"><div class="brand">ইলিশ কিনি</div><div style="font-size:28px;">☰</div></div>', unsafe_allow_html=True)
+# 3. Top Header
+st.markdown('<div class="top-header"><h1>ইলিশ কিনি</h1></div>', unsafe_allow_html=True)
 
-# ৪. ফাংশনাল মেনুবার
+# 4. Left Sidebar Navigation (Tomar chawa moto Bame)
 with st.sidebar:
-    st.markdown("<h2 class='purple-text'>ন্যাভিগেশন</h2>", unsafe_allow_html=True)
-    menu = st.radio("অপশন বেছে নিন:", ["🏠 হোম - দাম যাচাই", "📜 চাঁদপুরের পূর্ণ ইতিহাস", "🧬 পুষ্টি ও বিজ্ঞান", "📍 ঘাট লোকেশন"])
+    st.markdown("<h2 style='color:#6B46C1 !important;'>মেনুবার</h2>", unsafe_allow_html=True)
+    menu = st.radio("বিভাগ বেছে নিন:", ["🏠 হোম - দাম যাচাই", "📜 চাঁদপুরের পূর্ণ ইতিহাস", "🧬 পুষ্টি ও বিজ্ঞান", "📍 ঘাট লোকেশন"])
     st.markdown("---")
-    st.write("Developed by **Sahib**")
+    st.markdown("Developed by **Sahib**")
 
-# ৫. কন্টেন্ট এরিয়া
+# 5. Content Section
+st.markdown('<div class="dsat-card">', unsafe_allow_html=True)
+
 if menu == "🏠 হোম - দাম যাচাই":
-    st.markdown("<h1 style='text-align:center;' class='purple-text'>স্বাগতম আপনাকে</h1>", unsafe_allow_html=True)
-    st.markdown('<div class="dsat-card">', unsafe_allow_html=True)
-    st.markdown("<h3 class='orange-text'>বাজার দর যাচাই করুন</h3>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align:center;'>স্বাগতম আপনাকে</h2>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align:center;'>সঠিক দামে কিনুন <span class='highlight'>চাঁদপুরের ইলিশ</span></p>", unsafe_allow_html=True)
     
-    size = st.selectbox("মাছের সাইজ নির্বাচন করুন", ["৫০০-৬০০ গ্রাম", "৭০০-৯০০ গ্রাম", "১ কেজি সাইজ", "১.৫ কেজি+", "২ কেজি+"])
-    prices = {"৫০০-৬০০ গ্রাম": 1150, "৭০০-৯০০ গ্রাম": 1250, "১ কেজি সাইজ": 1550, "১.৫ কেজি+": 1950, "২ কেজি+": 2750}
+    size = st.selectbox("মাছের ওজন নির্বাচন করুন", ["৫০০-৬০০ গ্রাম", "১ কেজি সাইজ", "১.৫ কেজি+", "২ কেজি+"])
+    prices = {"৫০০-৬০০ গ্রাম": 1150, "১ কেজি সাইজ": 1550, "১.৫ কেজি+": 1950, "২ কেজি+": 2750}
     fair_price = prices[size]
     
-    st.write(f"সঠিক বাজার দর: **{fair_price} ৳ (কেজি)**")
+    st.write(f"আজকের সঠিক বাজার দর: **{fair_price} ৳ (কেজি)**")
     user_p = st.number_input("বিক্রেতা কত দাম চাচ্ছে?", value=fair_price)
     
     if st.button("দাম যাচাই করুন"):
         if user_p > fair_price + 150:
-            st.error(f"🚨 অতিরিক্ত {user_p - fair_price} টাকা চাচ্ছে! দরাদরি করুন।")
+            st.error(f"🚨 অতিরিক্ত {user_p - fair_price} টাকা বেশি চাচ্ছে!")
         else:
-            st.success("✅ দাম একদম সঠিক। আপনি কিনতে পারেন।")
-    st.markdown('</div>', unsafe_allow_html=True)
+            st.success("✅ দাম একদম সঠিক আছে।")
 
 elif menu == "📜 চাঁদপুরের পূর্ণ ইতিহাস":
-    st.markdown('<div class="dsat-card">', unsafe_allow_html=True)
-    st.markdown("<h2 class='orange-text'>ইলিশের রাজধানী চাঁদপুরের গৌরবগাঁথা</h2>", unsafe_allow_html=True)
-    st.markdown("""<div class="content-para">
-    চাঁদপুর জেলাকে সরকারিভাবে <b>'ইলিশের বাড়ি'</b> হিসেবে ঘোষণা করা হয়েছে। এর ভৌগোলিক অবস্থানই একে অনন্য করে তুলেছে। এখানে পদ্মা, মেঘনা এবং ডাকাতিয়া নদীর ত্রিমোহনা অবস্থিত।<br><br>
-    <b>স্বাদের রহস্য:</b> ইলিশ মূলত লবণাক্ত পানির মাছ, কিন্তু প্রজনন মৌসুমে এরা মিষ্টি পানির খোঁজে মোহনায় চলে আসে। সমুদ্র থেকে উজানে আসার সময় এদের শরীরে এক প্রকার ফ্যাট বা তেল জমা হয়। চাঁদপুরের মোহনায় পানির স্রোত এবং গভীরতা এমন থাকে যা এই তেলকে সুস্বাদু চর্বিতে রূপান্তর করে। এই কারণেই চাঁদপুরের ইলিশ পৃথিবীর সবচেয়ে সুস্বাদু মাছ হিসেবে স্বীকৃত। <br><br>
-    <b>বাণিজ্যিক গুরুত্ব:</b> চাঁদপুর বড় স্টেশন মাছ ঘাট প্রায় ২০০ বছরের পুরনো। এখান থেকে প্রতিদিন গড়ে কয়েক হাজার মণ ইলিশ ঢাকা, চট্টগ্রামসহ সারা দেশে এবং ভারতে রপ্তানি করা হয়। ১৯শ শতাব্দী থেকেই ব্রিটিশ ভারতের অন্যতম প্রধান মৎস্য বাণিজ্য কেন্দ্র ছিল এই চাঁদপুর।
-    </div>""", unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown("<h2 class='highlight'>ইলিশের রাজধানী চাঁদপুরের ইতিহাস</h2>", unsafe_allow_html=True)
+    st.write("""
+    চাঁদপুরকে বলা হয় 'ইলিশের বাড়ি'। পদ্মা, মেঘনা ও ডাকাতিয়া নদীর মিলনস্থলে লোনা ও মিষ্টি পানির সংমিশ্রণের কারণে এখানকার ইলিশের স্বাদ সারা বিশ্বে অতুলনীয়। 
+    ১৮শ শতাব্দী থেকে চাঁদপুর মাছ ঘাট ইলিশ বাণিজ্যের প্রাণকেন্দ্র। প্রতি বছর এখান থেকে কয়েক হাজার টন মাছ সারা বিশ্বে রপ্তানি হয়।
+    """)
 
 elif menu == "🧬 পুষ্টি ও বিজ্ঞান":
-    st.markdown('<div class="dsat-card">', unsafe_allow_html=True)
-    st.markdown("<h2 class='orange-text'>ইলিশের বিস্ময়কর স্বাস্থ্য উপকারিতা</h2>", unsafe_allow_html=True)
-    st.markdown("""<div class="content-para">
-    ইলিশকে বলা হয় মাছের রাজা, আর পুষ্টিগুণে এটি যেকোনো উন্নত প্রাণীর চেয়েও শক্তিশালী। গবেষকদের মতে এর উপকারিতা নিম্নরূপ:<br><br>
-    ১. <b>ওমেগা-৩ ফ্যাটি এসিড:</b> ইলিশে প্রচুর EPA ও DHA থাকে যা হৃদরোগের ঝুঁকি প্রায় ৪০% কমিয়ে দেয় এবং ধমনীতে রক্ত চলাচল স্বাভাবিক রাখে।<br>
-    ২. <b>মস্তিষ্কের বিকাশ:</b> শিশুদের মেধা বিকাশে এবং বয়স্কদের স্মৃতিভ্রম (Alzheimer's) রোগ প্রতিরোধে এর কোনো বিকল্প নেই।<br>
-    ৩. <b>ভিটামিন এ ও ডি:</b> এটি চোখের জ্যোতি বাড়াতে সাহায্য করে এবং হাড়ের ক্যালসিয়াম শোষণ ক্ষমতা বাড়িয়ে হাড় মজবুত করে।<br>
-    ৪. <b>ত্বকের যত্ন:</b> ইলিশের প্রোটিন ত্বককে উজ্জ্বল করে এবং বলিরেখা দূর করতে সাহায্য করে।
-    </div>""", unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown("<h2 class='highlight'>কেন চাঁদপুরের ইলিশ সেরা?</h2>", unsafe_allow_html=True)
+    st.write("""
+    ১. **ওমেগা-৩:** এটি হার্টের ব্লকেজ প্রতিরোধ করে।
+    ২. **মস্তিষ্কের মেধা:** শিশুদের মেধা বিকাশে অত্যন্ত কার্যকর।
+    ৩. **ভিটামিন ডি:** হাড় মজবুত করে ও ক্যালসিয়াম বাড়ায়।
+    ৪. **ত্বক ও চোখ:** চোখের জ্যোতি বাড়াতে সাহায্য করে।
+    """)
 
 elif menu == "📍 ঘাট লোকেশন":
-    st.markdown('<div class="dsat-card">', unsafe_allow_html=True)
-    st.markdown("<h3 class='purple-text'>চাঁদপুর বড় স্টেশন ঘাট ম্যাপ</h3>", unsafe_allow_html=True)
-    st.write("বিশ্বখ্যাত মাছের আড়তের সঠিক ম্যাপ নিচে দেওয়া হলো:")
-    st.markdown('<a href="https://www.google.com/maps/search/Chandpur+Fish+Ghat" target="_blank" style="text-decoration:none;"><div style="background:#6B46C1; color:white; text-align:center; padding:18px; border-radius:15px; font-weight:bold; font-size:18px;">গুগল ম্যাপে ঘাট দেখুন</div></a>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown("<h3 style='color:#6B46C1 !important;'>চাঁদপুর বড় স্টেশন মাছ ঘাট</h3>", unsafe_allow_html=True)
+    st.markdown('<a href="https://maps.google.com/?q=Chandpur+Fish+Ghat" target="_blank" style="text-decoration:none;"><div style="background:#FF7A00; color:white; text-align:center; padding:15px; border-radius:12px; font-weight:bold;">গুগল ম্যাপে দেখুন</div></a>', unsafe_allow_html=True)
 
-# ফুটার
-st.markdown("<center><p style='color:#6B46C1; margin-top:20px; font-size:14px;'>Developed by <b>Sahib</b> | All Rights Reserved © 2026</p></center>", unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
+
+# 6. Footer
+st.markdown("<br><center><p style='color:#6B46C1 !important;'>© 2026 | Sahib's Project</p></center>", unsafe_allow_html=True) 
+    
