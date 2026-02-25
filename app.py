@@ -1,150 +1,156 @@
 import streamlit as st
 
-# ১. গুগল স্ট্যান্ডার্ড পেজ কনফিগ (Shikho/DSAT Style)
+# 1. Google Standard Page Config
 st.set_page_config(page_title="Elish Kini Pro", page_icon="🐟", layout="centered")
 
-# ২. আলটিমেট প্রিমিয়াম ডার্ক থিম CSS (৩য় পিকের হুবহু লুক)
+# 2. Ultra-Premium Dark Theme (Shikho/3rd Pic Style)
 st.markdown("""
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap');
     
-    /* মেইন ব্যাকগ্রাউন্ড - Midnight Dark */
+    /* Main Background - Midnight Dark Blue */
     .stApp {
         background-color: #0F172A !important;
         font-family: 'Hind Siliguri', sans-serif !important;
     }
 
-    /* সাইডবার ডার্ক লুক */
+    /* Sidebar Dark Look */
     [data-testid="stSidebar"] {
         background-color: #1E293B !important;
         border-right: 1px solid #334155;
     }
 
-    /* ৩য় পিকের মতো ঝকঝকে সাদা ফন্ট */
+    /* 3rd Pic-er moto Shada Font */
     h1, h2, h3, p, span, label, b, li {
-        color: #F8FAFC !important;
+        color: #FFFFFF !important;
     }
 
-    /* টপ বার (Shikho Style) */
-    .top-header {
-        background: rgba(30, 41, 59, 0.7);
-        backdrop-filter: blur(10px);
-        padding: 15px;
-        border-radius: 12px;
+    /* Custom Top Header with 3-Dash Menu Icon */
+    .custom-nav {
+        background: #1E293B;
+        padding: 15px 20px;
+        border-radius: 15px;
         border: 1px solid #334155;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
     }
+    .brand { font-size: 22px; font-weight: 700; color: #A855F7 !important; }
+    .hamburger { font-size: 24px; color: #FFFFFF !important; cursor: pointer; }
 
-    /* ডেটা কার্ডস (Shikho Dashboard Style) */
-    .data-card {
+    /* Shikho Style Data Cards */
+    .shikho-card {
         background: #1E293B;
-        padding: 20px;
-        border-radius: 16px;
+        padding: 22px;
+        border-radius: 18px;
         border: 1px solid #334155;
         margin-bottom: 20px;
-        transition: 0.3s;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
-    .data-card:hover { border-color: #6366F1; }
 
-    /* নিওন হাইলাইট কালার */
+    /* Neon Highlights */
     .neon-purple { color: #A855F7 !important; font-weight: 700; }
-    .neon-orange { color: #F59E0B !important; font-weight: 700; }
     .neon-blue { color: #38BDF8 !important; font-weight: 700; }
+    .neon-orange { color: #F59E0B !important; font-weight: 700; }
 
-    /* বাটন ফিক্স */
+    /* Button Style */
     div.stButton > button {
         background: linear-gradient(135deg, #6366F1 0%, #A855F7 100%) !important;
         color: white !important;
-        border-radius: 10px;
+        border-radius: 12px;
         height: 3.5em; width: 100%; border: none; font-weight: 700;
+        font-size: 16px;
     }
 
-    /* ইনপুট বক্স ডার্ক স্টাইল */
+    /* Input Box Dark Mode Protection */
     div[data-baseweb="select"] > div, input {
         background-color: #0F172A !important;
         color: white !important;
         border: 1px solid #334155 !important;
     }
+
+    /* Sidebar text fix */
+    .css-17l2qt2 { color: white !important; }
     </style>
     """, unsafe_allow_html=True)
 
-# ৩. কাস্টম টপ বার
+# 3. Functional Header with 3-Dash Hint
 st.markdown("""
-    <div class="top-header">
-        <div style="font-size:20px; font-weight:700; color:#A855F7;">Shikho Elish 🐟</div>
-        <div style="color:#94A3B8; font-size:14px;">Senior Dev: Sahib</div>
+    <div class="custom-nav">
+        <div class="brand">Shikho Elish 🐟</div>
+        <div class="hamburger">☰</div>
     </div>
     """, unsafe_allow_html=True)
 
-# ৪. সাইডবার ন্যাভিগেশন
+# 4. Sidebar Menu
 with st.sidebar:
-    st.markdown("<h2 class='neon-purple'>Dashboard</h2>", unsafe_allow_html=True)
-    menu = st.radio("মেনু সিলেক্ট করুন:", [
-        "📊 বাজার ও বাণিজ্য ডেটা", 
-        "⚖️ দাম যাচাই মেশিন", 
-        "💡 ইলিশ কেনার গোপন টিপস",
-        "📞 কমপ্লেন সেন্টার"
+    st.markdown("<h2 class='neon-purple'>Main Menu</h2>", unsafe_allow_html=True)
+    menu = st.radio("Choose Section:", [
+        "📊 Bazar Report", 
+        "⚖️ Price Checker", 
+        "💡 Secret Buying Tips",
+        "📞 Complain Box"
     ])
+    st.markdown("---")
+    st.write("Senior Dev: **Sahib**")
 
-# ৫. কন্টেন্ট এরিয়া
-if menu == "📊 বাজার ও বাণিজ্য ডেটা":
-    st.markdown("<h2 class='neon-blue'>চাঁদপুর ইলিশ রিপোর্ট ২০২৪-২৫</h2>", unsafe_allow_html=True)
+# 5. Content Section
+if menu == "📊 Bazar Report":
+    st.markdown("<h2 class='neon-blue'>Chandpur Elish Report 2026</h2>", unsafe_allow_html=True)
     
-    col1, col2 = st.columns(2)
-    with col1:
-        st.markdown("""<div class="data-card">
-            <p style="color:#94A3B8 !important;">মোট রপ্তানি (বছর)</p>
-            <h2 class="neon-orange">৫২,০০০+ টন</h2>
-            <p style="font-size:12px;">ভারত ও ইউরোপে সর্বাধিক</p>
+    c1, c2 = st.columns(2)
+    with c1:
+        st.markdown("""<div class="shikho-card">
+            <p style="color:#94A3B8 !important; margin:0;">Export (Annual)</p>
+            <h2 class="neon-orange" style="margin:5px 0;">52,000+ Ton</h2>
+            <p style="font-size:12px; color:#94A3B8 !important;">India & Europe</p>
         </div>""", unsafe_allow_html=True)
-    with col2:
-        st.markdown("""<div class="data-card">
-            <p style="color:#94A3B8 !important;">সরকারি রাজস্ব আয়</p>
-            <h2 class="neon-purple">১২৫ কোটি+</h2>
-            <p style="font-size:12px;">চাঁদপুর মোহনা জোন থেকে</p>
+    with c2:
+        st.markdown("""<div class="shikho-card">
+            <p style="color:#94A3B8 !important; margin:0;">Govt Revenue</p>
+            <h2 class="neon-purple" style="margin:5px 0;">125cr+ BDT</h2>
+            <p style="font-size:12px; color:#94A3B8 !important;">From Chandpur Zone</p>
         </div>""", unsafe_allow_html=True)
     
-    st.markdown("<div class='data-card'>", unsafe_allow_html=True)
-    st.markdown("<h3 class='neon-blue'>বাণিজ্যিক ইতিহাস</h3>", unsafe_allow_html=True)
-    st.write("চাঁদপুর ঘাট থেকে প্রতিদিন গড়ে প্রায় ৮০০-১২০০ মণ ইলিশ দেশের বিভিন্ন প্রান্তে সরবরাহ হয়। বিশেষ করে ইলিশের মৌসুমে এই লেনদেন দৈনিক ১০-১৫ কোটি টাকা ছাড়িয়ে যায়।")
+    st.markdown("<div class='shikho-card'>", unsafe_allow_html=True)
+    st.markdown("<h3 class='neon-blue'>Business Summary</h3>", unsafe_allow_html=True)
+    st.write("Chandpur ghat theke protidin pray 800-1200 mon elish nationwide supply hoy. Peak season-e ekhane dainik 10-15 koti takar transaction hoy.")
     st.markdown("</div>", unsafe_allow_html=True)
 
-elif menu == "⚖️ দাম যাচাই মেশিন":
-    st.markdown("<div class='data-card'>", unsafe_allow_html=True)
-    st.markdown("<h2 class='neon-purple'>স্মার্ট প্রাইস ডিটেক্টর</h2>", unsafe_allow_html=True)
+elif menu == "⚖️ Price Checker":
+    st.markdown("<div class='shikho-card'>", unsafe_allow_html=True)
+    st.markdown("<h2 class='neon-purple'>Smart Price Detector</h2>", unsafe_allow_html=True)
     
-    size = st.selectbox("মাছের সাইজ:", ["৫০০-৬০০ গ্রাম", "১ কেজি সাইজ", "১.৫ কেজি+", "২ কেজি+"])
-    prices = {"৫০০-৬০০ গ্রাম": 1150, "১ কেজি সাইজ": 1550, "১.৫ কেজি+": 1950, "২ কেজি+": 2750}
+    size = st.selectbox("Select Size:", ["500-600g", "1KG Size", "1.5KG+", "2KG+"])
+    prices = {"500-600g": 1150, "1KG Size": 1550, "1.5KG+": 1950, "2KG+": 2750}
     fair_price = prices[size]
     
-    st.write(f"অফিশিয়াল গড় দাম: **{fair_price} ৳**")
-    user_p = st.number_input("বিক্রেতার চাওয়া দাম:", value=int(fair_price))
+    st.write(f"Official Avg Price: **{fair_price} ৳**")
+    user_p = st.number_input("Seller Asking Price:", value=int(fair_price))
     
-    if st.button("রেজাল্ট চেক করুন"):
+    if st.button("Check Result"):
         if user_p > fair_price + 150:
-            st.error(f"🚨 অতিরিক্ত {user_p - fair_price} টাকা বেশি! দরাদরি করুন।")
+            st.error(f"🚨 Too High! Extra {user_p - fair_price} BDT asked.")
         else:
-            st.success("✅ দাম ঠিক আছে। নিতে পারেন।")
+            st.success("✅ Price is fair. You can buy!")
     st.markdown("</div>", unsafe_allow_html=True)
 
-elif menu == "💡 ইলিশ কেনার গোপন টিপস":
-    st.markdown("<h2 class='neon-orange'>রিসার্চ ভিত্তিক সেরা ইলিশ চেনার টিপস</h2>", unsafe_allow_html=True)
-    st.markdown("""<div class='data-card'>
-        <p><b>১. পেট পরীক্ষা:</b> পেটে চাপ দিলে যদি মুখ দিয়ে ডিম বা মল বের হয়, তবে বুঝবেন মাছটি নরম হয়ে গেছে। শক্ত পেটের মাছ কিনুন।</p>
-        <p><b>২. রূপালী আভা:</b> টাটকা ইলিশ আয়নার মতো চকচক করবে। চোখে রক্ত জমে লাল হয়ে থাকলে সেই মাছ এড়িয়ে চলুন।</p>
-        <p><b>৩. মোহনার মাছ:</b> চাঁদপুরের মোহনার মাছ চেনার উপায় হলো এটি আকারে কিছুটা গোলগাল (পটকা) হবে এবং লেজের দিকটা সরু হবে।</p>
-        <p><b>৪. ফুলকার রঙ:</b> ফুলকা যদি টকটকে লাল হয় তবে সেটি টাটকা। কালচে ফুলকা মানে হিমায়িত বা পুরনো মাছ।</p>
+elif menu == "💡 Secret Buying Tips":
+    st.markdown("<h2 class='neon-orange'>How to Identify Fresh Elish</h2>", unsafe_allow_html=True)
+    st.markdown("""<div class='shikho-card'>
+        <p><b>1. Belly Test:</b> Pet-e chap dile jodi mukh diye dim ber hoy, bujhben mach norom. Shokto pet-er mach kinun.</p>
+        <p><b>2. Silver Glow:</b> Fresh elish aynar moto chokchok korbe. Chokh jodi lal hoye thake, oita niben na.</p>
+        <p><b>3. Mohonar Garon:</b> Chandpur-er mohonar mach ektu gol-gal (potka) hoy ar lej-er dikta shoru hoy.</p>
+        <p><b>4. Gills (Fulkha):</b> Fulkha jodi tok-toke lal hoy tobe oita fresh. Kalche fulkha mane purono mach.</p>
     </div>""", unsafe_allow_html=True)
 
-elif menu == "📞 কমপ্লেন সেন্টার":
-    st.markdown("<div class='data-card' style='text-align:center;'>", unsafe_allow_html=True)
-    st.markdown("<h2 class='neon-purple'>ভোক্তা অধিকার হটলাইন</h2>", unsafe_allow_html=True)
-    st.write("চাঁদপুর মাছ ঘাটে প্রতারিত হলে সরাসরি ডায়াল করুন:")
-    st.markdown("<h1 style='color:#F59E0B !important; font-size:60px;'>16121</h1>", unsafe_allow_html=True)
+elif menu == "📞 Complain Box":
+    st.markdown("<div class='shikho-card' style='text-align:center;'>", unsafe_allow_html=True)
+    st.markdown("<h2 class='neon-purple'>Consumer Rights Hotline</h2>", unsafe_allow_html=True)
+    st.write("Jodi kono seller dhoka dey, call korun:")
+    st.markdown("<h1 style='color:#F59E0B !important; font-size:60px; margin:10px 0;'>16121</h1>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
-# ৬. ফুটার
-st.markdown("<center><p style='color:#64748B; font-size:12px; margin-top:50px;'>© 2026 Elish Pro | Senior Dev: Sahib | Shikho Inspired UI</p></center>", unsafe_allow_html=True)
+# 6. Footer
+st.markdown("<center><p style='color:#64748B; font-size:12px; margin-top:50px;'>© 2026 Elish Pro | Senior Dev: Sahib</p></center>", unsafe_allow_html=True)        
