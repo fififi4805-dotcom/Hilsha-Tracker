@@ -1,139 +1,142 @@
 import streamlit as st
 import datetime
 
-# ১. হাই-এন্ড অ্যাপ কনফিগারেশন
-st.set_page_config(page_title="ইলিশ কিনি", page_icon="🐟", layout="wide")
+# ১. প্রফেশনাল কনফিগারেশন
+st.set_page_config(page_title="ইলিশ কিনি | চাঁদপুর", page_icon="🐟", layout="wide")
 
-# ২. প্রফেশনাল সিএসএস (১ম পিকের মতো প্রিমিয়াম ডিজাইন)
+# ২. আল্ট্রা-প্রিমিয়াম সিএসএস (iOS 17 & Material Design 3 স্টাইল)
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@400;600;800&family=Hind+Siliguri:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Hind+Siliguri:wght@400;700&display=swap');
     
-    html, body, [class*="css"] {
-        font-family: 'SF Pro Display', 'Hind Siliguri', sans-serif;
-        background-color: #FFFFFF;
-        color: #1D1D1F;
-    }
-
-    /* সাইডবার প্রিমিয়াম লুক */
+    * { font-family: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif; }
+    .stApp { background-color: #FFFFFF; color: #101828; }
+    
+    /* সাইডবার ডিজাইন */
     [data-testid="stSidebar"] {
-        background-color: #F5F5F7;
-        border-right: 1px solid #D2D2D7;
+        background-color: #F9FAFB;
+        border-right: 1px solid #EAECF0;
+        padding-top: 20px;
     }
     
-    /* বাম পাশের লোগো স্টাইল */
-    .brand-logo {
-        font-size: 26px; font-weight: 800; color: #000000;
-        margin-bottom: 25px; border-left: 5px solid #007AFF; padding-left: 10px;
+    /* লোগো ও ব্র্যান্ডিং */
+    .nav-brand {
+        font-size: 24px; font-weight: 800; color: #004EEB;
+        padding: 10px 20px; border-radius: 12px;
+        background: #EFF4FF; display: inline-block; margin-bottom: 30px;
     }
 
-    /* মেইন কার্ড */
-    .premium-card {
-        background: #FFFFFF; padding: 30px; border-radius: 20px;
-        border: 1px solid #E5E5E7; box-shadow: 0 8px 30px rgba(0,0,0,0.04);
-        margin-bottom: 20px;
+    /* মেইন কার্ড - গ্রাসমর্ফিজম টাচ */
+    .stat-card {
+        background: #FFFFFF; padding: 25px; border-radius: 20px;
+        border: 1px solid #F2F4F7; box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        transition: 0.3s;
     }
+    .stat-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); }
 
-    /* ডাইনামিক বাটন */
+    /* ইনপুট ফিল্ডস */
+    .stSelectbox, .stNumberInput { margin-bottom: 20px; }
+
+    /* প্রিমিয়াম বাটন */
     div.stButton > button:first-child {
-        background: #007AFF; color: white !important;
-        border-radius: 12px; height: 3.5em; width: 100%;
-        font-weight: 700; border: none; transition: all 0.2s;
+        background: linear-gradient(135deg, #004EEB 0%, #0035A1 100%);
+        color: white !important; border-radius: 12px;
+        height: 3.8em; width: 100%; font-weight: 700;
+        font-size: 16px; border: none; box-shadow: 0 4px 14px rgba(0, 78, 235, 0.25);
     }
-    div.stButton > button:first-child:hover {
-        background: #0051A8; transform: scale(1.01);
-    }
-
-    /* হেল্পলাইন বক্স */
-    .call-box {
-        background: #FFF2F2; padding: 25px; border-radius: 20px;
-        border: 1px solid #FFC7C7; text-align: center;
+    
+    /* ব্যাজ */
+    .badge {
+        padding: 4px 12px; border-radius: 50px; font-size: 12px; font-weight: 600;
+        background: #ECFDF3; color: #027A48; border: 1px solid #ABEFC6;
     }
     </style>
     """, unsafe_allow_html=True)
 
-# ৩. স্মার্ট প্রাইসিং লজিক (অটোমেটেড সিজনাল ডাটা)
+# ৩. ডাইনামিক প্রাইসিং ও সিজন লজিক
 month = datetime.datetime.now().month
-is_off_season = month in [2, 3, 4, 5, 6] # এই মাসগুলোতে ইলিশ কম থাকে, দাম বেশি
-status_text = "অফ-সিজন (দাম কিছুটা চড়া)" if is_off_season else "ভরা মৌসুম (দাম কম)"
-multiplier = 1.35 if is_off_season else 1.0
+month_name = datetime.datetime.now().strftime("%B")
+is_peak = 8 <= month <= 10  # আগস্ট-অক্টোবর
+season_status = "ভরা মৌসুম (দাম কম)" if is_peak else "অফ-সিজন (দাম চড়া)"
+price_factor = 1.0 if is_peak else 1.35
 
-# ৪. সাইডবার নেভিগেশন (১ম পিকের মতো প্রফেশনাল)
+# ৪. সাইডবার নেভিগেশন
 with st.sidebar:
-    st.markdown('<div class="brand-logo">ইলিশ কিনি</div>', unsafe_allow_html=True)
-    menu = st.radio("মেনু সিলেক্ট করুন", 
-                    ["🏠 হোম / দাম চেক", "📍 ঘাট লোকেশন", "📜 ইতিহাস ও অর্থনীতি", "🩺 পুষ্টিগুণ", "📞 অভিযোগ কেন্দ্র"])
+    st.markdown('<div class="nav-brand">🐟 ইলিশ কিনি</div>', unsafe_allow_html=True)
+    menu = st.radio("সরাসরি যান", ["📊 ড্যাশবোর্ড", "🗺️ ঘাট ম্যাপ", "🌍 ইতিহাস ও রপ্তানি", "💊 পুষ্টি ও স্বাস্থ্য", "🚨 হেল্পলাইন"])
     st.markdown("---")
-    lang = st.segmented_control("Language", ["বাংলা", "English"], default="বাংলা")
+    st.markdown("### 🌐 ভাষা / Language")
+    lang = st.radio("সিলেক্ট করুন", ["বাংলা", "English"], horizontal=True)
 
-# ৫. হোম সেকশন: দাম যাচাই
-if menu == "🏠 হোম / দাম চেক":
-    st.markdown('<div class="brand-logo">ইলিশ কিনি</div>', unsafe_allow_html=True)
+# ৫. ড্যাশবোর্ড: স্মার্ট ক্যালকুলেটর
+if menu == "📊 ড্যাশবোর্ড":
+    st.markdown(f'<h1 style="color:#101828;">হ্যালো সাহেব! 👋</h1>', unsafe_allow_html=True)
+    st.markdown(f'<span class="badge">📅 {month_name} - {season_status}</span>', unsafe_allow_html=True)
     
-    st.markdown(f'<p style="color:#8E8E93; font-weight:600;">বর্তমান অবস্থা: {status_text}</p>', unsafe_allow_html=True)
+    st.markdown('<div style="margin-top:25px;"></div>', unsafe_allow_html=True)
     
-    st.markdown('<div class="premium-card">', unsafe_allow_html=True)
-    c1, c2 = st.columns(2)
-    with c1:
-        size = st.selectbox("মাছের আকার", ["৫০০-৬০০ গ্রাম", "৭০০-৯০০ গ্রাম", "১ কেজি সাইজ", "১.৫ কেজি+", "২ কেজি+"])
+    col1, col2 = st.columns([2, 1])
     
-    # রিয়েলিস্টিক ডাটাবেজ
-    base_price = {"৫০০-৬০০ গ্রাম": 950, "৭০০-৯০০ গ্রাম": 1100, "১ কেজি সাইজ": 1500, "১.৫ কেজি+": 1850, "২ কেজি+": 2600}
-    fair_price = int(base_price[size] * multiplier)
-    
-    with c2:
-        st.metric("সাজেস্টেড বাজার দর", f"{fair_price} ৳")
+    with col1:
+        st.markdown('<div class="stat-card">', unsafe_allow_html=True)
+        st.subheader("🔍 বাজার দর যাচাই")
+        fish_size = st.selectbox("মাছের সাইজ বেছে নিন", ["৫০০-৬০০ গ্রাম", "৭০০-৯০০ গ্রাম", "১ কেজি সাইজ", "১.৫ কেজি+", "২ কেজি+"])
+        
+        base_data = {"৫০০-৬০০ গ্রাম": 950, "৭০০-৯০০ গ্রাম": 1150, "১ কেজি সাইজ": 1550, "১.৫ কেজি+": 1900, "২ কেজি+": 2700}
+        current_fair_price = int(base_data[fish_size] * price_factor)
+        
+        user_ask = st.number_input("বিক্রেতা কত দাম চাচ্ছে? (টাকা/কেজি)", min_value=100, value=current_fair_price)
+        
+        if st.button("রেজাল্ট দেখুন"):
+            diff = user_ask - current_fair_price
+            if diff > 150:
+                st.error(f"🚨 অতিরিক্ত দাম! আপনি প্রতি কেজিতে {diff} টাকা বেশি দিচ্ছেন।")
+            elif diff < -50:
+                st.success("✅ এটি একটি গোল্ডেন ডিল! আপনি সাশ্রয়ী দামে কিনছেন।")
+                st.balloons()
+            else:
+                st.info("👌 দাম ঠিক আছে। আপনি কিনতে পারেন।")
+        st.markdown('</div>', unsafe_allow_html=True)
 
-    user_ask = st.number_input("বিক্রেতা কত দাম চেয়েছে?", min_value=100, value=fair_price)
-    
-    if st.button("দাম যাচাই করুন"):
-        if user_ask > fair_price + 200:
-            st.error(f"⚠️ সাবধান! আপনি প্রতি কেজিতে প্রায় {user_ask - fair_price} টাকা বেশি দিচ্ছেন।")
-            st.markdown("💡 **পরামর্শ:** চাঁদপুর মাছ ঘাটে গিয়ে যাচাই করুন, সেখানে দাম আরও কম পাবেন।")
-        elif user_ask < fair_price - 50:
-            st.balloons()
-            st.success("✅ চমৎকার ডিল! এটি বর্তমান বাজারের সেরা দাম।")
-        else:
-            st.info("👌 দাম একদম স্বাভাবিক। আপনি নিশ্চিন্তে কিনতে পারেন।")
-    st.markdown('</div>', unsafe_allow_html=True)
+    with col2:
+        st.markdown('<div class="stat-card">', unsafe_allow_html=True)
+        st.subheader("💡 টিপস")
+        st.write("• চাঁদপুর ঘাটে ভোরে গেলে সবচেয়ে তাজা মাছ পাওয়া যায়।")
+        st.write("• বরফ ছাড়া মাছ কেনার চেষ্টা করুন, স্বাদ বেশি পাবেন।")
+        st.write("• লালচে কানকো দেখে কিনবেন।")
+        st.markdown('</div>', unsafe_allow_html=True)
 
-# ৬. লোকেশন সেকশন
-elif menu == "📍 ঘাট লোকেশন":
+# ৬. ম্যাপ ও লোকেশন
+elif menu == "🗺️ ঘাট ম্যাপ":
     st.subheader("📍 চাঁদপুর বড় স্টেশন মাছ ঘাট")
-    st.markdown('<div class="premium-card">', unsafe_allow_html=True)
-    st.write("এটি বাংলাদেশের বৃহত্তম ইলিশের পাইকারি বাজার। তাজা ইলিশের জন্য সরাসরি এখানে চলে যান।")
-    st.markdown("""<a href="https://maps.app.goo.gl/3f6V4A89uY5N7YVj9" target="_blank">
-    <button style="background:#4285F4; color:white; border:none; padding:12px 25px; border-radius:10px; cursor:pointer; font-weight:700;">
-    গুগল ম্যাপসে লোকেশন দেখুন</button></a>""", unsafe_allow_html=True)
+    st.markdown('<div class="stat-card">', unsafe_allow_html=True)
+    st.write("বিশ্বখ্যাত চাঁদপুরের ইলিশের প্রধান আড়ত।")
+    st.markdown("""<a href="https://www.google.com/maps/search/Chandpur+Fish+Ghat" target="_blank">
+    <button style="background:#004EEB; color:white; border:none; padding:15px 25px; border-radius:10px; cursor:pointer; font-weight:700; width:100%;">
+    গুগল ম্যাপে ওপেন করুন</button></a>""", unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ৭. ইতিহাস ও অনুবাদ (২য় পিকের ইন্সট্রাকশন অনুযায়ী)
-elif menu == "📜 ইতিহাস ও অর্থনীতি":
-    st.markdown('<div class="premium-card">', unsafe_allow_html=True)
+# ৭. ইতিহাস ও অনুবাদ
+elif menu == "🌍 ইতিহাস ও অর্থনীতি":
+    st.markdown('<div class="stat-card">', unsafe_allow_html=True)
     if lang == "বাংলা":
-        st.subheader("চাঁদপুর ও ইলিশের গৌরবগাথা")
-        st.write("চাঁদপুরকে বলা হয় 'ইলিশের বাড়ি'। এখানকার পদ্মা-মেঘনা মোহনার রুপালি ইলিশ স্বাদে ও গন্ধে অতুলনীয়। ইলিশ রপ্তানি করে বাংলাদেশ প্রতি বছর ৩৫০-৪০০ মিলিয়ন ডলার বৈদেশিক মুদ্রা অর্জন করে। এটি আমাদের সংস্কৃতির এক অবিচ্ছেদ্য অংশ।")
+        st.subheader("চাঁদপুরের ইলিশের অর্থনীতি")
+        st.write("চাঁদপুরকে বলা হয় 'ইলিশের বাড়ি'। মেঘনা-পদ্মার পানির লবণাক্ততা ও প্রবাহের কারণে এখানকার মাছ সবচেয়ে সুস্বাদু। প্রতি বছর বাংলাদেশ প্রায় ৩৫০ মিলিয়ন ডলারের ইলিশ রপ্তানি করে, যার বড় অংশই চাঁদপুরের আড়ত থেকে সংগৃহীত হয়।")
     else:
-        st.subheader("Legacy & Economy of Chandpur Hilsha")
-        st.write("Chandpur is hailed as the 'Home of Hilsha'. The silver Hilsha from the Padma-Meghna estuary is unparalleled in taste. Exporting Hilsha contributes approximately $350-400 million in foreign exchange annually, making it a vital part of Bangladesh's economy.")
+        st.subheader("Economy of Chandpur Hilsha")
+        st.write("Chandpur is hailed as the 'Home of Hilsha'. The unique salinity and flow of the Meghna-Padma estuary make these fish the tastiest. Bangladesh exports approximately $350 million worth of Hilsha annually, with a huge portion sourced from Chandpur's markets.")
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ৮. পুষ্টিগুণ
-elif menu == "🩺 পুষ্টিগুণ":
-    st.subheader("🐟 কেন ইলিশ খাবেন?")
-    st.markdown('<div class="premium-card">', unsafe_allow_html=True)
-    st.write("• **ওমেগা-৩ ফ্যাটি অ্যাসিড:** হার্ট ও মস্তিষ্কের জন্য উপকারী।\n• **ভিটামিন বি-১২:** রক্তকণিকা গঠনে সাহায্য করে।\n• **জিঙ্ক ও আয়োডিন:** রোগ প্রতিরোধ ক্ষমতা বাড়ায়।")
+# ৮. হেল্পলাইন
+elif menu == "🚨 হেল্পলাইন":
+    st.markdown('<div style="background:#FEF3F2; padding:40px; border-radius:24px; text-align:center; border:1px solid #FEE4E2;">', unsafe_allow_html=True)
+    st.markdown('<h2 style="color:#B42318;">ভোক্তা অধিকার চাঁদপুর</h2>', unsafe_allow_html=True)
+    st.write("অতিরিক্ত দাম বা ওজনে কারচুপি হলে সরাসরি কল করুন")
+    st.markdown('<a href="tel:16121" style="text-decoration:none;"><h1 style="color:#B42318; font-size:64px; margin:20px 0;">16121</h1></a>', unsafe_allow_html=True)
+    st.markdown('<span class="badge" style="background:#FEE4E2; color:#B42318;">কল খরচ ফ্রি</span>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
-# ৯. অভিযোগ কেন্দ্র (সরাসরি কল)
-elif menu == "📞 অভিযোগ কেন্দ্র":
-    st.markdown('<div class="call-box">', unsafe_allow_html=True)
-    st.markdown('<h2 style="color:#D32F2F;">ভোক্তা অধিকার সংরক্ষণ</h2>', unsafe_allow_html=True)
-    st.write("ওজনে কারচুপি বা অতিরিক্ত দাম চাইলে সরাসরি কল করুন")
-    st.markdown('<a href="tel:16121" style="text-decoration:none;"><h1 style="color:#D32F2F; font-size:60px;">16121</h1></a>', unsafe_allow_html=True)
-    st.write("চাঁদপুর জেলা কার্যালয়")
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# ১০. ফুটার (তোমার নামসহ)
+# ৯. ফুটার
 st.markdown("---")
-st.markdown("<center><p style='color:#8E8E93;'>🛡️ <b>ইলিশ কিনি</b> - স্বচ্ছ বাজার মুভমেন্ট<br>Developed by <b>Sahib</b></p></center>", unsafe_allow_html=True)
+st.markdown("<center><p style='color:#667085; font-size:14px;'>🛡️ <b>ইলিশ কিনি v3.0</b><br>Developed by <b>Sahib</b></p></center>", unsafe_allow_html=True)    
+    
